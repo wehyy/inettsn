@@ -24071,8 +24071,8 @@ EXPORTS
     _ZTCN4inet16PcpCqfClassifierE0_NS_8queueing19PacketProcessorBaseE @24070 DATA
     _ZTCN4inet16PcpCqfClassifierE0_NS_8queueing20PacketClassifierBaseE @24071 DATA
     _ZTCN4inet16PcpCqfClassifierE248_NS_39TransparentProtocolRegistrationListenerE @24072 DATA
-    _ZTCN4inet16PcpCqfClassifierE432_NS_8queueing11IPacketSinkE @24073 DATA
-    _ZTCN4inet16PcpCqfClassifierE448_NS_8queueing13IPacketSourceE @24074 DATA
+    _ZTCN4inet16PcpCqfClassifierE440_NS_8queueing11IPacketSinkE @24073 DATA
+    _ZTCN4inet16PcpCqfClassifierE456_NS_8queueing13IPacketSourceE @24074 DATA
     _ZTCN4inet16SendToMacAddressE0_NS_8queueing14PacketFlowBaseE @24075 DATA
     _ZTCN4inet16SendToMacAddressE0_NS_8queueing19PacketProcessorBaseE @24076 DATA
     _ZTCN4inet16SendToMacAddressE328_NS_8queueing11IPacketFlowE @24077 DATA

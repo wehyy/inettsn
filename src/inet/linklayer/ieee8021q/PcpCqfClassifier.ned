@@ -34,5 +34,6 @@ module PcpCqfClassifier extends PacketClassifierBase like IPacketClassifier
                                   [0, 1, 2, 3, 3, 4, 5, 6],   // IC internetwork control
                                   [0, 1, 2, 3, 4, 5, 6, 7]]); // NC network control
         int defaultGateIndex = default(0); // default gate index if no PCP found
+        object cqfqueues = default([7, 6]);
         @class(PcpCqfClassifier);
 }

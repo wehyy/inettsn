@@ -20,6 +20,7 @@ void PcpCqfClassifier::initialize(int stage)
     if (stage == INITSTAGE_LOCAL) {
         mode = par("mode");
         mapping = check_and_cast<cValueArray *>(par("mapping").objectValue());
+        cqfqueues = check_and_cast<cValueArray *>(par("cqfqueues").objectValue());
         defaultGateIndex = par("defaultGateIndex");
         isOpen_ = par("initiallyOpen");
         interval = par("interval");
@@ -35,6 +36,8 @@ void PcpCqfClassifier::handleParameterChange(const char *name)
     if (name != nullptr) {
         if (!strcmp(name, "initiallyOpen"))
             isOpen_ = par("initiallyOpen");
+        else if (!strcmp(name, "cqfqueues"))
+            cqfqueues = check_and_cast<cValueArray *>(par("cqfqueues").objectValue());
         else if (!strcmp(name, "interval")) {
             interval = par("interval");
             initializeGating();
@@ -56,9 +59,12 @@ void PcpCqfClassifier::handleMessage(cMessage *message)
 
 void PcpCqfClassifier::initializeGating()
 {
-    if (changeTimer->isScheduled())
-        cancelClockEvent(changeTimer);
-    scheduleChangeTimer();
+    index = 0;
+    if (index < (int)cqfqueues->size()) {
+        if (changeTimer->isScheduled())
+            cancelClockEvent(changeTimer);
+        scheduleChangeTimer();
+    }
 }
 
 void PcpCqfClassifier::scheduleChangeTimer()
@@ -71,6 +77,8 @@ void PcpCqfClassifier::scheduleChangeTimer()
 
 void PcpCqfClassifier::processChangeTimer()
 {
+    ASSERT(0 <= index && index < (int)cqfqueues->size());
+    index = (index + 1) % cqfqueues->size();
     if (isOpen_)
         isOpen_ = false;
     else
@@ -107,11 +115,9 @@ int PcpCqfClassifier::classifyPacket(Packet *packet)
     }
     if (pcp != -1) {
         int numTrafficClasses = gateSize("out");
-        if (pcp == 6) {
-            if (isOpen_)
-                return numTrafficClasses - 1;
-            else
-                return numTrafficClasses - 2;
+        int currentcqfqueue = cqfqueues->get(index);
+        if (pcp == 3) {
+            return currentcqfqueue;
         }
         else
             return pcp % numTrafficClasses;

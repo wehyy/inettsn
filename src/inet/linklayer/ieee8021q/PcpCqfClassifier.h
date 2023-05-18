@@ -20,6 +20,7 @@ class INET_API PcpCqfClassifier : public ClockUserModuleMixin<queueing::PacketCl
   protected:
     const char *mode = nullptr;
     cValueArray *mapping = nullptr;
+    cValueArray *cqfqueues = nullptr;
     int defaultGateIndex = -1;
     int index = 0;
     clocktime_t interval;
