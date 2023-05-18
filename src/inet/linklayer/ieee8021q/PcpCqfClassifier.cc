@@ -107,10 +107,14 @@ int PcpCqfClassifier::classifyPacket(Packet *packet)
     }
     if (pcp != -1) {
         int numTrafficClasses = gateSize("out");
-        if (isOpen_)
-            return 0;
+        if (pcp == 6) {
+            if (isOpen_)
+                return numTrafficClasses - 1;
+            else
+                return numTrafficClasses - 2;
+        }
         else
-            return 1;
+            return pcp % numTrafficClasses;
     }
     else
         return defaultGateIndex;
